@@ -4,7 +4,6 @@ const cheerio = require("cheerio");
 
 const router = express.Router();
 
-// Codeforces API
 router.get("/codeforces", async (req, res) => {
   try {
     const url = "https://codeforces.com/api/contest.list?gym=false";
@@ -25,7 +24,6 @@ router.get("/codeforces", async (req, res) => {
   }
 });
 
-// LeetCode Scraper
 router.get("/leetcode", async (req, res) => {
   try {
     const url = "https://leetcode.com/contest/";
@@ -51,10 +49,9 @@ router.get("/leetcode", async (req, res) => {
   }
 });
 
-// CodeChef Scraper
 router.get("/codechef", async (req, res) => {
   try {
-    const url = "https://www.codechef.com/contests";
+    const url = "https://www.codechef.com/contests/";
     const html = (await axios.get(url)).data;
     const $ = cheerio.load(html);
     const data = [];

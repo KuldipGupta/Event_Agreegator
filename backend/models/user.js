@@ -11,7 +11,9 @@ const userSchema = new mongoose.Schema({
   department: String,
   mobile: String,
   email: String,
+  role: { type: String, enum: ['user', 'admin'], default: 'user' },
+  bio: { type: String, default: '' },
+  profileImage: { type: String, default: '' }
 });
 
-// Prevent OverwriteModelError in dev/hot-reload
 module.exports = mongoose.models.User || mongoose.model('User', userSchema);

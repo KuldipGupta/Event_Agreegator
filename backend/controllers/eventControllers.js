@@ -1,21 +1,12 @@
-const Event = require('../models/event');
+const Event = require('../models/Event');
 
-// Get all events
 exports.getEvents = async (req, res) => {
-  try {
-    const events = await Event.find().sort({ date: 1 });
-    res.json(events);
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' });
-  }
+  const events = await Event.find();
+  res.json(events);
 };
 
-// Create a new event
 exports.createEvent = async (req, res) => {
-  try {
-    const event = await Event.create({ ...req.body, organizerId: req.user._id });
-    res.status(201).json(event);
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' });
-  }
+  const { title, description, date } = req.body;
+  const event = await Event.create({ title, description, date });
+  res.status(201).json(event);
 };
