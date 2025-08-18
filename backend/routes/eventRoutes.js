@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Event = require('../models/event');
-const auth = require('../middleware/authMiddleware');
+const { protect, adminOnly } = require('../middleware/authMiddleware');
 
 // Get all events (public)
 router.get('/', async (req, res) => {
@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
 });
 
 // Create event (admin only)
-router.post('/', auth.protect, auth.adminOnly, async (req, res) => {
+router.post('/', protect, adminOnly, async (req, res) => {
   try {
     const event = new Event(req.body);
     await event.save();
@@ -21,7 +21,7 @@ router.post('/', auth.protect, auth.adminOnly, async (req, res) => {
 });
 
 // Edit event (admin only)
-router.put('/:id', auth.protect, auth.adminOnly, async (req, res) => {
+router.put('/:id', protect, adminOnly, async (req, res) => {
   try {
     const event = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!event) return res.status(404).json({ message: 'Event not found' });
@@ -32,7 +32,7 @@ router.put('/:id', auth.protect, auth.adminOnly, async (req, res) => {
 });
 
 // Delete event (admin only)
-router.delete('/:id', auth.protect, auth.adminOnly, async (req, res) => {
+router.delete('/:id', protect, adminOnly, async (req, res) => {
   try {
     const event = await Event.findByIdAndDelete(req.params.id);
     if (!event) return res.status(404).json({ message: 'Event not found' });

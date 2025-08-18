@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
+// backend/models/event.js
 const eventSchema = new mongoose.Schema({
   title: String,
   description: String,
-  category: String,
-  location: String,
   date: Date,
-  time: String,
-  organizerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  status: { type: String, default: 'pending' },
+  platform: String,
+  href: String,
+  externalId: String // for external contests
 });
 
 module.exports = mongoose.model('Event', eventSchema);

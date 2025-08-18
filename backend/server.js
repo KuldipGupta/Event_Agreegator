@@ -1,24 +1,27 @@
+const dotenv = require('dotenv');
+dotenv.config({ path: './config/config.env' });
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
-
+const userEventsRoutes = require('./routes/userEvents');
 const connectDB = require('./config/db');
+const contactRoutes = require('./routes/contact');
+const clistRoutes = require('./routes/clist');
 
-dotenv.config({ path: './config/config.env' });
 connectDB();
-
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// Serve uploads folder publicly
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api/user', userEventsRoutes);
 // API routes
+app.use('/api/clist', clistRoutes);
+app.use('/api/contact', contactRoutes);
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/events', require('./routes/eventRoutes'));
 app.use('/api/contests', require('./routes/contestRoutes'));

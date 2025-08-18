@@ -51,7 +51,7 @@ router.get("/leetcode", async (req, res) => {
 
 router.get("/codechef", async (req, res) => {
   try {
-    const url = "https://www.codechef.com/contests/";
+    const url = "https://www.codechef.com/contests";
     const html = (await axios.get(url)).data;
     const $ = cheerio.load(html);
     const data = [];
